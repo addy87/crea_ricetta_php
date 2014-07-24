@@ -1,0 +1,556 @@
+body {
+	min-width: 400px;
+}
+
+code, kbd, pre, samp, kbd li {
+	font-family: Menlo,Monaco,Consolas,"Courier New",monospace !important;
+}
+
+p {
+	font-size: 14px;
+}
+
+
+
+
+
+
+.header {
+	text-align: center;
+	border-bottom:1px solid black;
+	background-color: #1abc9c;
+	border-color: #169f84;
+	margin-bottom: 20px;
+
+}
+
+.header h3{
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	color: white;
+	font-size: 26px;
+}
+
+.container{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	background-color: whitesmoke;	
+	padding: 10px 30px 10px 30px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-bottom-color: #bdc3c7;
+	border-left-color: #dfe2e4;
+	border-right-color: #dfe2e4;
+	border-top-color: #dfe2e4;
+}
+
+.settore_transp {
+	border: 1px solid transparent;
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	padding: 0px;
+	margin-bottom: 0px;
+}
+
+#formo {
+	margin-bottom: 0;
+}
+
+#avanzate button {
+	font-size: 13px;
+	margin: 5px;
+}
+
+#avanzate p {
+	line-height: 20px;
+}
+
+
+.controller {
+	border-radius: 10px;
+	background-color: whitesmoke;
+	color: white;
+	text-align: center;
+}
+
+.controller_load {
+	background-color: #16A085;
+	padding: 10px 0 15px 0;	
+}
+.controller_load p {
+	font-weight: 200;
+	margin: 0;
+	line-height: 25px;
+}
+
+button#carica_ricetta {
+	margin: 0;
+	margin-left: 5px;
+}
+
+.ico_controller {
+	width: 30px;
+	opacity: 0.3;
+	margin-bottom: 10px;
+}
+
+.ico_controller_small {
+	width: 22px;
+}
+
+.icona {
+	width: 16px;
+	margin-right: 5px;
+}
+
+.icona_big {
+	width: 18px;
+	margin-right: 5px;
+}
+
+.icona_bigger {
+	width: 25px;
+	margin-right: 5px;
+}
+
+#add_ingrediente, #add_fase, #add_testo, #add_riga {
+	padding: 7px;
+
+}
+
+#add_fase:hover, #add_testo:hover, #add_riga:hover {
+	background-color: #48c9b0;
+	border-color: #48c9b0;
+}
+
+#add_testo {
+	background-color: #16A085;
+}
+#add_riga {
+	background-color: #136B5A;
+}
+
+
+#tab {
+	width: 100%;
+}
+
+
+#ricette_salvate {
+	width: 65%;
+	display: inline-block;
+}
+
+
+#ricetta {
+	list-style: none;
+	padding: 0 !important;
+
+}
+
+#ricetta li {
+	min-height: 50px;
+	height : auto;
+	border: 1px solid #ccc;
+	font-weight: 400;
+	color: #34495e;
+	background-color: rgb(248, 248, 248);
+	padding: 5px 5px 5px 10px !important;
+	cursor: all-scroll;
+	font-size: 16px;
+	border-radius: 5px;
+	margin-bottom: -1px;
+}
+
+#ricetta li:nth-child(even) {
+	
+}
+
+#ricetta li:nth-child(odd) {
+	
+}
+
+#ricetta li.fase {
+	cursor: all-scroll;
+	background-color: #D3D3D3;
+	padding: 5px 5px 5px 10px !important;
+	font-size: 18px;
+	font-weight: 400 !important;
+}
+
+#ricetta li.fase .glyphicon, #ricetta li .glyphicon{
+	font-size: 20px;
+	opacity: 0.8;
+}
+
+
+#reset, #aggiorna {
+	margin-bottom: 10px;
+}
+
+.separatore {
+	width: 90%;
+	margin: auto;
+	height: 1px;
+	background-color: grey;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+#totale p{
+	text-align: center;
+	font-weight: 400;
+}
+
+#output {
+	list-style: none;
+	margin-top: 30px;
+}
+
+
+#info {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	border:none !important;
+
+}
+
+#info .btn {
+	border:none !important;
+}
+#info .glyphicon{
+	font-size: 20px !important;
+	color: white;
+	background: none !important;
+	margin: 0;
+	padding: 0;
+}
+
+#info .glyphicon:hover{
+	color: rgb(223, 223, 223);
+}
+
+.panel-primary {
+	border-color: #1B806C;
+}
+
+.panel-primary > .panel-heading {
+	background-color: #16A085;
+	border-color: #1B806C;
+}
+
+
+
+
+
+.dropdown-menu {
+	min-width: 400px !important;
+}
+
+
+strong a{
+	font-weight: 600 !important;
+}
+
+.twitter-typeahead {
+	display: block !important;
+}
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 100%;
+  
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+max-height: 250px;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+  color: #34495e;
+}
+
+.gist {
+  font-size: 14px;
+}
+
+.info_convertitore p, #form_convert p {
+	font-weight: 400 !important;
+}
+
+#inci li {
+	list-style: none;
+	display: inline;
+}
+
+.lipide {
+	font-weight: 400 !important;
+}
+
+
+
+#grassi {
+	font-weight: 600 !important;
+	text-align: center;
+	text-decoration: underline;
+}
+
+#info_canvas {
+	font-size: 10px !important;
+	text-decoration: underline;
+	text-align: center;
+	margin-bottom: 50px;
+	color: rgb(184, 22, 22);
+
+}
+
+ #elenco_oli_considerati {
+ 	font-size: 14px !important;
+	text-align: center;
+	margin-bottom: 20px;
+ }
+
+#canvas {
+	margin-bottom: 20px;
+}
+
+
+kbd {
+	background-color: transparent;
+	padding: 0px;
+}
+
+.well {
+	background-color: #95A5A6;
+}
+
+
+
+#totale_kbd {
+	color: white;
+}
+
+
+th {
+	font-weight: 200;
+}
+
+
+button {
+	font-weight: 200 !important;
+}
+
+.antimateria.tada {
+
+	-webkit-animation-iteration-count: 3;
+
+	-moz-animation-iteration-count: 3;
+
+	-ms-animation-iteration-count: 3;
+
+	-o-animation-iteration-count: 3;
+
+	animation-iteration-count: 3;
+}
+.nome {
+	width: 34%;
+	word-break: break-all;
+	display: inline-block;
+}
+
+.controller_elemento {
+	float:right;
+	display: table;
+	width: 140px;
+	text-align: center;
+
+}
+
+.lipide_caption {
+	font-size: 11px !important;
+	padding: 0;
+	width: 55px;
+}
+
+
+.controller_elemento a, .controller_elemento label {
+	display: table-cell;
+	vertical-align: middle;
+} 
+
+
+
+::-webkit-input-placeholder { font-size: 12px; }
+::-moz-placeholder { font-size: 12px; } /* firefox 19+ */
+:-ms-input-placeholder { font-size: 12px; } /* ie */
+input:-moz-placeholder { font-size: 12px; }
+
+
+
+.quantita_singola, .nome {
+	font-size: 15px;
+	vertical-align: middle;
+}
+
+.contenuto_testo{
+	width: 90%;
+	display: inline-block;
+	vertical-align: middle;
+	word-break: break-all;
+}
+
+input[name="lipide"] {
+	margin:0;
+}
+
+.panel-default > .panel-heading {
+	background-color: #34495e;
+	color: white;
+}
+
+.panel-body {
+	background-color: #e7e7e7;
+	padding: 5px;
+}
+
+.panel-title {
+	font-weight: 200;
+}
+
+#container_inventario {
+	text-align: center;
+}
+
+#inventario_toggle {
+	padding:1px 5px!important;
+}
+
+.categoria {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	border: 1px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-bottom-color: #bdc3c7;
+	border-left-color: #dfe2e4;
+	border-right-color: #dfe2e4;
+	border-top-color: #dfe2e4;
+}
+
+.panel-heading.heading-categoria {
+	background-color: #3498db;
+}
+
+.ingrediente_inventario {
+	white-space: normal;
+	word-break: break-all;
+	color: #34495e;
+	margin: 2px;
+	font-size: 13px;
+}
+
+#elenco_ingredienti_inventario {
+	width: auto;
+
+}
+
+.categoria {
+	float:left;
+	width: 48%;
+	margin: 7px;
+}
+
+
+
+@media (max-width:1199px) {
+	.categoria {
+		width: 45%;
+	}
+}
+
+
+
+
+@media (min-width: 768px) {
+	.nome {
+		width: 40%;
+	}
+	#ricetta li {
+		min-height: 39px;
+		height : auto;
+	}
+}
+
+@media (max-width: 767px) {
+	.nome {
+		width: 34%;
+	}
+}
+
+@media (max-width: 579px) {
+	.categoria {
+		float:left;
+		width: auto;
+	}
+
+	.ingrediente_inventario {
+		margin: 5px;
+	}
+}
+
+
+
+
+
