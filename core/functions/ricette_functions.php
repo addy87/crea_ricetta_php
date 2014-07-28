@@ -38,8 +38,10 @@ if (isset($_GET["aggiorna_ricetta"]) && !empty($_GET["aggiorna_ricetta"])) {
 if (isset($_POST["salva_ricetta"]) && !empty($_POST["salva_ricetta"]) && isset($_POST["titolo_ricetta"]) && !empty($_POST["titolo_ricetta"])) {
 
 	$user_id = (int) $user_data["user_id"];
-	$titolo_ricetta = mysql_real_escape_string($_POST["titolo_ricetta"]);
+	$titolo_ricetta = $_POST["titolo_ricetta"];
 	$code_ricetta = mysql_real_escape_string($_POST["salva_ricetta"]);
+
+
 	
 	if(!salva_ricetta($user_id, $titolo_ricetta, $code_ricetta)) {
 		echo "Attenzione, è già presente una ricetta con questo nome. Per aggiornare una ricetta esistente, caricala e clicca il pulsante AGGIORNA RICETTA ESISTENTE";
@@ -47,6 +49,7 @@ if (isset($_POST["salva_ricetta"]) && !empty($_POST["salva_ricetta"]) && isset($
 		echo "Ricetta ". $titolo_ricetta . " salvata!";
 
 	}
+
 }
 
 ?>

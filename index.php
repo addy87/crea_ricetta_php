@@ -55,6 +55,26 @@
 
 <?php include 'includes/footer.php' ?>
 
+	<div id="facebook-div" style="width: 100%; text-align:center">
+	<!-- Go to www.addthis.com/dashboard to customize your tools -->
+	<div class="addthis_native_toolbox"></div>
+	<p style="text-align:center" class="small">Aiuta questa pagina condividendo l'indirizzo con i tuoi amici :-) grazie!</p>
+	</div>
+
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53d1846a1efb1356"></script>
+
+<style>
+.addthis_native_toolbox {
+	width: 300px;
+	margin: 0 auto;
+	margin-top:70px;
+}
+.fb-share-button > span {
+	vertical-align: top !important;
+}
+
+</style>
 
 <style>
 .intro {

@@ -10,30 +10,31 @@ try { localStorage.test = 2; localStorage.removeItem('test');} catch (e) {
 ";
 
 if (logged_in() === false) {
-	echo "<script>".'alert("Attenzione! Non sei autenticato. La funzionalità di salvataggio delle ricette è riservata solamente agli utenti autenticati. Registrati anche tu per salvare e modificare le tue ricette!");'."</script>";
+	echo "<script>".'alert("Attenzione! Non sei autenticato. Le funzionalite di salvataggio delle ricette e inventario sono riservate solamente agli utenti autenticati. Registrati anche tu per salvare e modificare le tue ricette!");'."</script>";
 }
 
 
 ?>
 
 <link rel="stylesheet" href="css/crea_ricetta.css"></link>
-			<?php if(logged_in() === true) { ?>
+			
 			<div class="container settore_transp">
 				<div class="col-md-12" id="">
-					<?php
+					
 
+					<div class="container" id="container_inventario">
+						<div class="row">
+							<button type="button" class="btn btn-info btn-sm" data-toggle="collapse" data-target="#inventario" id="inventario_toggle">Apri/Chiudi il tuo inventario</button>
+
+							<div id="inventario" class="collapse out" style="text-align:center">
+					<?php
+					if(logged_in() === true) {
 						$ingredienti_inventario = get_ingredienti_inventario($user_data["user_id"]);
 						$categorie = array();
 
 						if($ingredienti_inventario != "zero_ingredienti_inventario") {
 
 					?>
-
-					<div class="container" id="container_inventario">
-						<div class="row">
-							<button type="button" class="btn btn-info btn-sm" data-toggle="collapse" data-target="#inventario" id="inventario_toggle">Apri il tuo inventario</button>
-
-							<div id="inventario" class="collapse out" style="text-align:center">
 								<p style="margin-top:10px">Clicca sul nome di un ingrediente per aggiungerlo alla ricetta.</p>
 					<?php
 								foreach ($ingredienti_inventario as $ingrediente_inventario) {
@@ -45,36 +46,57 @@ if (logged_in() === false) {
 
 								foreach ($categorie as $categoria) {
 									echo '<div class="panel panel-default row categoria">
-											<div class="panel-heading heading-categoria">
-												<h3 class="panel-title">'. $categoria .'</h3>
-											</div>
-											<div class="panel-body">
+									<div class="panel-heading heading-categoria">
+										<h3 class="panel-title" style="word-break: break-all;">'. $categoria .'</h3>
+									</div>
+									<div class="panel-body">
 
-											';
-								
+									';
+						
 									foreach ($ingredienti_inventario as $ingrediente_inventario) {
 										if($ingrediente_inventario["categoria"] == $categoria) {
 											$id = (int) $ingrediente_inventario["ingrediente_id"];
-											echo "<a type='button' class='btn btn-default ingrediente_inventario btn_inventario'>".$ingrediente_inventario["nome_ingrediente"]."</a>";
+
+											echo '<div class="panel-group" id="accordion'.$id.'"><div class="panel panel-default panel-ingrediente"><div class="panel-heading nome-ingrediente-panel"><a data-toggle="collapse" data-parent="#accordion'.$id.'" href="#collapse'.$id.'" class="panel-title nome-ingrediente-a">'.$ingrediente_inventario["nome_ingrediente"]."<b class='caret'></b></a></div>";
+											echo'<div id="collapse'.$id.'" class="panel-collapse collapse"><div class="panel-body panel-body-ingrediente" style="text-align:center">';
+
+											
+
+											if(strlen($ingrediente_inventario["inventario_note"])>0) {
+												echo "<p class='nota'>".nl2br($ingrediente_inventario["inventario_note"])."</p>";
+											} else {
+												echo "<p class='nota'>Nessuna nota per questo ingrediente</p>";
+											}
+
+
+
+											echo "<a type='button' class='btn btn-sm btn-success btn_inventario' nome='". htmlspecialchars($ingrediente_inventario["nome_ingrediente"], ENT_QUOTES) ."'>Aggiungi questo ingrediente</a>";
+											echo "</div></div></div></div>";
 										}
 									}
 									echo "</div></div>";
 
 								}
-
+						} else {
 					?>
+						<br>
+						<p>Non hai ancora aggiunto alcun ingrediente al tuo inventario. Vai alla <a href="profile.php">pagina profilo</a> per aggiungere il primo! :-)</p>
+					<?php
+						}
+					} else 
+					{
+					?>
+						<br>
+						<p>Solo gli utenti registrati possono salvare qui dentro i loro ingredienti e selezionarli subito per inserirli nella ricetta.<br><a href="register.php">Registrati</a> anche tu :-)</p>
+					<?php 
+					} ?>
 							</div>
 						</div>
 					</div>
 
-				<?php									
-
-						}
-
-				?>
+				
 				</div>
 			</div>
-			<?php } ?>
 			<div class="container settore_transp">				
 				<div class="col-md-4" id="container0">
 

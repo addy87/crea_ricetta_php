@@ -41,7 +41,7 @@
 		var quantita_totale;
 
 		function controllo_modifiche_ricetta() {
-			$("#ricetta li").mousedown(function() {$("#output").fadeOut(); $("body").focus(); });
+			$("#ricetta li, #ricetta a").mousedown(function() {console.log("click");$("#output").fadeOut(); $("body").focus(); });
 			$(".controller button").mousedown(function() {$("#output").fadeOut("slow");});
 			$("body").css("height", "auto");
 			$("body").css("height", "100%");
@@ -189,13 +189,6 @@
 							});
 
 			
-			$("#inventario").on("show.bs.collapse", function() {
-				$("#inventario_toggle").text("Chiudi il tuo inventario");
-			});
-
-			$("#inventario").on("hide.bs.collapse", function() {
-				$("#inventario_toggle").text("Apri il tuo inventario");
-			});
 
 			
 
@@ -260,6 +253,7 @@
 
 
 				$(".modifica").unbind("click").click(modifica_ingrediente);
+				
 				$(".rimuovi").click(cancella_ingrediente);
 				$(".lipide").click(lipide);
 
@@ -270,13 +264,16 @@
 		}
 
 		function aggiungi_da_inventario() {
-			var nome = $(this).text();
+			var nome = $(this).attr("nome");
 			console.log(nome);
 			var quantita = parseFloat(prompt("Quantità per l'ingrediente " + nome + "?")).toFixed(2);
 
 			if(!isNaN(parseFloat(quantita))) {
 				add_ingrediente(nome, quantita);
 			}
+
+			$(this).parent().parent().parent().children(".nome-ingrediente-panel").children(".nome-ingrediente-a").click();
+
 
 		}
 
@@ -368,16 +365,31 @@
 			var testo = "";
 			$("#ricetta").fadeIn("slow");
 			var li = $("<li class='testo'>");
+			
 			if(typeof arguments[0] == "string")
 				testo = pre_testo;
 			else
 				testo = prompt("Digita il testo da inserire nella riga (es. OE Limone 6gtt)");
 
 			if (testo != "" && testo != null) {
-				li.html("<div class='contenuto_testo'>" +testo +"</div>" + "<a href='' style='float:right; color:#d9534f' onClick='$(this).parent().remove();check(); return false'><span class='glyphicon glyphicon-remove'></span></a>");
+				li.html("<div class='contenuto_testo'>" +testo +"</div>" + "<a href='' style='color:#d9534f; margin-right: 19px' onClick='$(this).parent().remove();check(); return false'><span class='glyphicon glyphicon-remove'></span></a><a href='' style='color:#2887FF;' class='modifica_testo' ><span class='glyphicon glyphicon-pencil'></span></a>");
 				$("#ricetta").append(li);
+				$(".modifica_testo").click(modifica_testo);
 			}
 			check();
+		}
+
+		function modifica_testo(e) {
+			
+			var vecchio_testo = $(this).parent().find(".contenuto_testo").text();
+
+			var nuovo_testo = prompt("Inserisci il nuovo testo:", vecchio_testo);
+			if (nuovo_testo != "" && nuovo_testo != null) {
+				$(this).parent().find(".contenuto_testo").text(nuovo_testo)
+			}
+
+			
+			return false;
 		}
 
 		function add_acqua(q) {
@@ -575,6 +587,7 @@
 					$("#aggiorna_ricetta").append('<span id="aggiornatore_ricette"><div class="col-md-9"><select id="ricette_aggiorna" class="form-control">'+data+'</select></span></div><div class="col-md-3"><button class="btn btn-block btn-info" id="aggiorna_ricetta_btn" onclick="aggiorna_ricetta()">Aggiorna</button></div></span>');
 				} else {
 					$("#aggiorna").hide();
+					$("#avanzate").append("<div class='separatore'></div><p>Gli utenti registrati possono caricare da qui le loro ricette salvete.<br><a href='register.php'>Registrati</a> anche tu :-)</p>")
 				}
 				
 			});

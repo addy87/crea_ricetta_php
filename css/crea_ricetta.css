@@ -372,7 +372,9 @@ kbd {
 	background-color: #95A5A6;
 }
 
-
+.well li *{
+	font-size: 13px;
+}
 
 #totale_kbd {
 	color: white;
@@ -402,7 +404,7 @@ button {
 }
 .nome {
 	width: 34%;
-	word-break: break-all;
+	word-break: break-word;
 	display: inline-block;
 }
 
@@ -441,39 +443,19 @@ input:-moz-placeholder { font-size: 12px; }
 }
 
 .contenuto_testo{
-	width: 90%;
+	width: 81.5%;
 	display: inline-block;
 	vertical-align: middle;
-	word-break: break-all;
+	word-break: break-word;
 }
 
 input[name="lipide"] {
 	margin:0;
 }
 
-.panel-default > .panel-heading {
-	background-color: #34495e;
-	color: white;
-}
 
-.panel-body {
-	background-color: #e7e7e7;
-	padding: 5px;
-}
 
-.panel-title {
-	font-weight: 200;
-}
-
-#container_inventario {
-	text-align: center;
-}
-
-#inventario_toggle {
-	padding:1px 5px!important;
-}
-
-.categoria {
+.categoria, .panel-body-ingrediente {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -489,16 +471,14 @@ input[name="lipide"] {
 	border-top-color: #dfe2e4;
 }
 
-.panel-heading.heading-categoria {
-	background-color: #3498db;
+.categoria .panel-body {
+	background-color: whitesmoke;
+	padding: 5px;
 }
 
-.ingrediente_inventario {
-	white-space: normal;
-	word-break: break-all;
-	color: #34495e;
-	margin: 2px;
-	font-size: 13px;
+.panel-title {
+	font-weight: 400;
+	font-size: 15px;
 }
 
 #elenco_ingredienti_inventario {
@@ -512,15 +492,78 @@ input[name="lipide"] {
 	margin: 7px;
 }
 
+.nome-ingrediente-panel {
+	background-color: #8BB4CF !important;
+	padding:3px 10px !important;
+	font-size: 12px;
+	
+}
 
+.nome-ingrediente-a {
+	width: 100%;
+	display: block;
+	color:white;
+	font-weight: 200;
+}
+.nome-ingrediente-a:hover {
+	color:white;
+}
+
+.categoria > .panel-body > .panel-group {
+	margin-bottom:5px;
+}
+
+#container_inventario {
+	text-align: center;
+}
+
+#inventario_toggle {
+	padding:1px 5px!important;
+}
+
+.categoria .panel-body {
+	background-color: #e7e7e7;
+	padding-top: 30px;
+		padding-bottom: 30px;
+}
+
+.panel-heading.heading-categoria {
+	background-color:#629ABE;
+	color: white;
+	font-weight: 400;
+}
+
+.panel-ingrediente {
+		width: 90%;
+		margin: auto;
+	}
+
+.caret {
+		border-bottom-color: #467B99;
+		border-top-color: #467B99;
+		margin-left: 18px;
+	}
+.panel-body-ingrediente {
+	background-color: #F8F8F8 !important;
+	margin-top: 0;
+	padding: 20px 30px;
+}
 
 @media (max-width:1199px) {
 	.categoria {
-		width: 45%;
-	}
+			width: 48%;
+			margin: 9px;
+		}
 }
 
 
+@media (max-width: 991px) {
+		.categoria {
+			width: 99%;
+			margin: 5px;
+		}
+
+	}
 
 
 @media (min-width: 768px) {
@@ -536,17 +579,6 @@ input[name="lipide"] {
 @media (max-width: 767px) {
 	.nome {
 		width: 34%;
-	}
-}
-
-@media (max-width: 579px) {
-	.categoria {
-		float:left;
-		width: auto;
-	}
-
-	.ingrediente_inventario {
-		margin: 5px;
 	}
 }
 

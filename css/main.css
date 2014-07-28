@@ -62,6 +62,11 @@ body {
 	width: 45px !important;
 }
 
+
+.navbar-text {
+	font-size: 13px;
+}
+
 @media (max-width: 500px) {
 	.brand_autenticato {
 		display: none;
@@ -93,13 +98,12 @@ body {
     .navbar-text {
         text-align: center !important;
         float: right;
-        font-size: 15px;
         margin-right: 10px;
         margin-left: 10px;
         display: inline-block;
         color: white;
         padding: 0;
-        padding-top: 16px;
+        padding-top: 18px;
     }
 
     .navbar-collapse {
@@ -143,12 +147,12 @@ body {
 		color:#F39C12;
 	}
 
-	.navbar-inverse .navbar-text a.logout {
+	.navbar-inverse .navbar-text a.ricetta-link {
 		color: #1abc9c;
 	}
 
-	.navbar-inverse .navbar-text a.logout:hover {
-		color: #1abc9c;
+	.navbar-inverse .navbar-text a.ricetta-link:hover {
+		color: #55D4BB;
 	}
 
 }

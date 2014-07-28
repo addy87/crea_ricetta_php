@@ -15,4 +15,20 @@
 		  ga('create', 'UA-50441901-1', 'altervista.org');
 		  ga('send', 'pageview');
 
+	$('.navbar-toggle').on("click tap", function() {
+		$(document).on('click', function() {
+			
+				$('.navbar-collapse').collapse('hide');
+			
+		});
+
+	});
+
 </script>
+
+
+<style>
+small, .small {
+	font-weight: 200;
+}
+</style>

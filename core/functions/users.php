@@ -1,5 +1,11 @@
 <?php
 
+function aggiorna_ingrediente_inventario($username, $ingrediente_id, $nuovo_nome_ingrediente, $nuova_categoria_ingrediente, $nuova_nota_ingrediente) {
+	$nuova_categoria_ingrediente = strtoupper($nuova_categoria_ingrediente);
+	mysql_query("UPDATE inventario SET nome_ingrediente = '$nuovo_nome_ingrediente', categoria = '$nuova_categoria_ingrediente', inventario_note = '$nuova_nota_ingrediente' WHERE username = '$username' AND ingrediente_id = '$ingrediente_id'");
+}
+
+
 function get_ingredienti_inventario($user_id) {	
 	$user_id = (int)$user_id;
 	$username = username_from_user_id($user_id);
@@ -17,9 +23,12 @@ function get_ingredienti_inventario($user_id) {
 
 }
 
-function aggiungi_ingrediente_inventario($username, $nome_ingrediente_inventario, $categoria_ingrediente) {
+function aggiungi_ingrediente_inventario($username, $nome_ingrediente_inventario, $categoria_ingrediente, $inventario_note) {
 	$categoria_ingrediente = strtoupper($categoria_ingrediente);
-	mysql_query("INSERT INTO inventario (username, nome_ingrediente, categoria) VALUES ('$username', '$nome_ingrediente_inventario', '$categoria_ingrediente')")or die(mysql_error());
+	if (!isset($inventario_note))
+		mysql_query("INSERT INTO inventario (username, nome_ingrediente, categoria) VALUES ('$username', '$nome_ingrediente_inventario', '$categoria_ingrediente')")or die(mysql_error());
+	else
+		mysql_query("INSERT INTO inventario (username, nome_ingrediente, categoria, inventario_note) VALUES ('$username', '$nome_ingrediente_inventario', '$categoria_ingrediente', '$inventario_note')")or die(mysql_error());
 }
 
 function cancella_ingrediente_inventario($username, $id) {
