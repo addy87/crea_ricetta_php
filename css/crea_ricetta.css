@@ -82,8 +82,9 @@ p {
 }
 
 .controller_load {
+	border-radius: 5px;
 	background-color: #16A085;
-	padding: 10px 0 15px 0;	
+	padding: 10px 0 20px 0;	
 }
 .controller_load p {
 	font-weight: 200;
@@ -481,6 +482,12 @@ input[name="lipide"] {
 	font-size: 15px;
 }
 
+#osservazioni-toggle .panel-title { 
+	font-weight: 200;
+	text-align: center;
+}
+
+
 #elenco_ingredienti_inventario {
 	width: auto;
 
@@ -534,20 +541,76 @@ input[name="lipide"] {
 }
 
 .panel-ingrediente {
-		width: 90%;
-		margin: auto;
-	}
+	width: 90%;
+	margin: auto;
+}
 
 .caret {
-		border-bottom-color: #467B99;
-		border-top-color: #467B99;
-		margin-left: 18px;
-	}
+	border-bottom-color: #467B99;
+	border-top-color: #467B99;
+	margin-left: 18px;
+}
+
 .panel-body-ingrediente {
 	background-color: #F8F8F8 !important;
 	margin-top: 0;
 	padding: 20px 30px;
 }
+
+#container1-info {
+	display: table;
+	height: 423px;
+}
+
+#container1-info > .row {
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#panel-osservazioni-main {
+	margin-bottom: 20px;
+}
+
+.panel-heading-osservazioni {
+	color: #ffffff !important;
+	background-color: #1abc9c !important;
+
+}
+
+.panel-heading-osservazioni a {
+	width: 100%;
+	text-align: center;
+	display: block;
+	font-weight: 200;
+}
+
+.panel-heading-osservazioni a:hover {
+	color: #ffffff !important;
+}
+
+#osservazioni-toggle .caret {
+	border-bottom-color: white;
+	border-top-color: white;
+}
+
+#panel-osservazioni > .panel-body {
+	background-color: #e7e7e7;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	border: 1px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-bottom-color: #bdc3c7;
+	border-left-color: #dfe2e4;
+	border-right-color: #dfe2e4;
+	border-top-color: #dfe2e4;
+}
+
+#osservazioni {
+	width: 100%;
+	padding: 10px;
+	font-size: 14px;
+}
+
 
 @media (max-width:1199px) {
 	.categoria {

@@ -34,16 +34,19 @@
 		$nome_ingrediente = str_replace("\\", "/", $_GET["nome_ingrediente_inventario"]);
 		$nome_ingrediente = str_replace("\"", "`", $nome_ingrediente);
 		$nome_ingrediente = str_replace("'", "`", $nome_ingrediente);
+		$nome_ingrediente = trim($nome_ingrediente);
 		$nome_ingrediente = addslashes($nome_ingrediente);
 
 		$categoria_ingrediente = str_replace("\\", "/", $_GET["categoria_ingrediente_inventario"]);
 		$categoria_ingrediente = str_replace("\"", "`", $categoria_ingrediente);
 		$categoria_ingrediente = str_replace("'", "`", $categoria_ingrediente);
+		$categoria_ingrediente = trim($categoria_ingrediente);
 		$categoria_ingrediente = addslashes($categoria_ingrediente);
 
 		$inventario_note = str_replace("\\", "/", $_GET["inventario_note"]);
 		$inventario_note = str_replace("\"", "`", $inventario_note);
-		$inventario_note = str_replace("\'", "`", $inventario_note);
+		$inventario_note = str_replace("'", "`", $inventario_note);
+		$inventario_note = trim($inventario_note);
 		$inventario_note = addslashes($inventario_note);
 
 		if(controllo_esistenza_ingrediente_in_inventario($username, $nome_ingrediente)) {
@@ -70,18 +73,21 @@
 		$username = username_from_user_id($user_data["user_id"]);
 
 		$nuovo_nome_ingrediente = str_replace("\\", "/", $_GET["nuovo_nome_ingrediente"]);
-		$nuovo_nome_ingrediente = str_replace("\"", "/", $nuovo_nome_ingrediente);
-		$nuovo_nome_ingrediente = str_replace("\'", "`", $nuovo_nome_ingrediente);
+		$nuovo_nome_ingrediente = str_replace("\"", "`", $nuovo_nome_ingrediente);
+		$nuovo_nome_ingrediente = str_replace("'", "`", $nuovo_nome_ingrediente);
+		$nuovo_nome_ingrediente = trim($nuovo_nome_ingrediente);
 		$nuovo_nome_ingrediente = addslashes($nuovo_nome_ingrediente);
 
 		$nuova_categoria_ingrediente = str_replace("\\", "/", $_GET["nuova_categoria_ingrediente"]);
-		$nuova_categoria_ingrediente = str_replace("\"", "/", $nuova_categoria_ingrediente);
-		$nuova_categoria_ingrediente = str_replace("\'", "`", $nuova_categoria_ingrediente);
+		$nuova_categoria_ingrediente = str_replace("\"", "`", $nuova_categoria_ingrediente);
+		$nuova_categoria_ingrediente = str_replace("'", "`", $nuova_categoria_ingrediente);
+		$nuova_categoria_ingrediente = trim($nuova_categoria_ingrediente);
 		$nuova_categoria_ingrediente = addslashes($nuova_categoria_ingrediente);
 
 		$nuova_nota_ingrediente = str_replace("\\", "/", $_GET["nuova_nota_ingrediente"]);
-		$nuova_nota_ingrediente = str_replace("\"", "/", $nuova_nota_ingrediente);
-		$nuova_nota_ingrediente = str_replace("\'", "`", $nuova_nota_ingrediente);
+		$nuova_nota_ingrediente = str_replace("\"", "`", $nuova_nota_ingrediente);
+		$nuova_nota_ingrediente = str_replace("'", "`", $nuova_nota_ingrediente);
+		$nuova_nota_ingrediente = trim($nuova_nota_ingrediente);
 		$nuova_nota_ingrediente = addslashes($nuova_nota_ingrediente);
 
 		$ingrediente_id = (int) $_GET["ingrediente_id"];
@@ -120,37 +126,55 @@
 
 
 	<div class="panel panel-default row sezione">
-		<div class="panel-heading">
-			<h3 class="panel-title">Cancella o modifica le tue ricette salvate.</h3>
+		<div class="panel-heading panel-heading-ricette">
+			<h3 class="panel-title">Gestisci le tue ricette salvate.</h3>
 		</div>
 
 		<div class="panel-body">
 			<div class="col-md-12">			
-				<p class="small">Attenzione! Una volta cancellata una ricetta non sarà più possibile poterla recuperare.</p>
-				<table id="tabella_ricette" class="table" style="text-align: center">
-					<th>TITOLO RICETTA</th>
-					<th>DATA DI CREAZIONE</th>
-					<th>ELABORA</th>
+				<p class="small">Clicca su una ricetta per vederne i dettagli, modificarla o cancellarla.</p>
 				
-					<?php
-						$ricette = get_ricette($user_data["user_id"]);
+				
+				<?php
+					$ricette = get_ricette($user_data["user_id"]);
 
-						if ($ricette == "zero_ricette") {
-							echo "<tr><td colspan='3'>Non hai ancora salvato nessuna ricetta. <a href='ricetta.php' style='font-weight: bold;'>Crea la tua prima ricetta!</a></td></tr>";
-						} else {
-							foreach ($ricette as $ricetta) {
-								echo "<tr><td>". $ricetta["titolo_ricetta"] ."</td><td>". $ricetta["data"] ."<td><a class='btn btn-danger btn-sm btn_elabora' href='?cancella=". $ricetta["ricetta_id"] ."'><span class='fui-cross'></span> Cancella</a><a class='btn btn-success btn-sm btn_elabora' href='?modifica=". $ricetta["ricetta_id"] ."'><span class='fui-new'></span> Modifica</a></td></tr>";
+					if ($ricette == "zero_ricette") {
+						echo "<tr><td colspan='3'>Non hai ancora salvato nessuna ricetta. <a href='ricetta.php' style='font-weight: bold;'>Crea la tua prima ricetta!</a></td></tr>";
+					} else {
+						foreach ($ricette as $ricetta) {
+							$code_ricetta = $ricetta["code_ricetta"];
+
+							$code_ricetta = str_replace("add_fase('", "", $code_ricetta);
+							$code_ricetta = str_replace("');", "<br>", $code_ricetta);
+							$code_ricetta = str_replace("add_ingrediente('", "", $code_ricetta);
+							$code_ricetta = str_replace("add_testo('", "", $code_ricetta);
+							$code_ricetta = str_replace("', '", " - ", $code_ricetta);
+
+							
+							$code_ricetta = str_replace("add_riga();", "<br>", $code_ricetta);
+
+							//echo "<tr><td>". $ricetta["titolo_ricetta"] ."</td><td>". $ricetta["data"] ."<td><a class='btn btn-danger btn-sm btn_elabora' href='?cancella=". $ricetta["ricetta_id"] ."'><span class='fui-cross'></span> Cancella</a><a class='btn btn-success btn-sm btn_elabora' href='?modifica=". $ricetta["ricetta_id"] ."'><span class='fui-new'></span> Modifica</a></td></tr>";
+							
+							echo '<div class="panel-group" id="ricetta'. $ricetta["ricetta_id"] .'"><div class="panel panel-default panel-ricetta"><div class="panel-heading nome-ricetta-panel"><a data-toggle="collapse" data-parent="#ricetta'. $ricetta["ricetta_id"] .'" href="#ricettacollapse'. $ricetta["ricetta_id"] .'" class="panel-title nome-ricetta-a">'.$ricetta["titolo_ricetta"]."<br><span class='data'>". $ricetta["data"] ."</span></a></div>";
+							echo'<div id="ricettacollapse'. $ricetta["ricetta_id"] .'" class="panel-collapse collapse"><div class="panel-body panel-body-ricetta" style="text-align:center">'. $code_ricetta;
+
+							if (strlen($ricetta["osservazioni"]) > 0) {
+								echo "<br>".$ricetta["osservazioni"];
 							}
+							echo "<div class='controller_ricetta'><a class='btn btn-danger btn-sm btn_elabora' href='?cancella=". $ricetta["ricetta_id"] ."'><span class='fui-cross'></span> Cancella</a><a class='btn btn-success btn-sm btn_elabora' href='?modifica=". $ricetta["ricetta_id"] ."'><span class='fui-new'></span> Modifica</a></div>";
+							echo '</div></div>';
+							echo '</div></div>';
 						}
-					?>
-				</table>
+					}
+				?>
+				
 			</div>
 		</div>
 	</div>
 
 
 	<div class="panel panel-default row sezione">
-		<div class="panel-heading">
+		<div class="panel-heading panel-heading-inventario">
 			<h3 class="panel-title">Aggiungi ingredienti al tuo inventario</h3>
 		</div>
 
@@ -252,7 +276,7 @@
 	$(".btn-danger, .ingrediente_inventario").click(function(evt) {		
 		
 
-		var conferma = confirm("Sei sicuro di voler cancellare questo elemento?");
+		var conferma = confirm("Cancellare definitivamente questo elemento?");
 		if (conferma) {
 			return true;
 		} else {
@@ -319,7 +343,7 @@
 		padding: 10px;
 	}
 
-	.sezione, .categoria, .panel-body-ingrediente {
+	.sezione, .categoria, .panel-body-ingrediente, .panel-body-ricetta {
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
@@ -335,6 +359,12 @@
 		border-right-color: #dfe2e4;
 		border-top-color: #dfe2e4;
 		margin-top: 50px;
+	}
+
+	.panel-body-ricetta {
+		margin-top: 0px;
+		background-color: #e7e7e7 !important;
+		font-size: 14px;
 	}
 
 	th {
@@ -363,15 +393,42 @@
 		margin-bottom: 10px;
 	}
 
-	.categoria {
+	.nome-ricetta-a, .nome-ricetta-a:hover {
+		color: white;
+		font-weight: 400 !important;
+		text-transform: uppercase;
+	}
+
+	.data {
+		font-weight: 200;
+		font-size: 12px;
+	}
+
+	.panel-heading-ricette {
+		background-color: #AD376B !important;
+	}
+
+	.panel-heading-inventario {
+		background-color: #1671AC !important;
+	}
+
+	.panel-ricetta > .nome-ricetta-panel {
+		background-color: #D3719C;
+		padding:3px 10px;
+	}
+
+	.controller_ricetta {
+		margin-top: 20px;
+	}
+
+	.categoria, .panel-group > .panel-ricetta {
 		float:left;
 		width: 48%;
 		margin: 11px;
 	}
 
-	.panel-heading.heading-categoria {
-		background-color: #629ABE;
-				
+	.panel-heading.heading-categoria  {
+		background-color: #629ABE;				
 	}
 
 	.categoria .panel-body {
@@ -400,7 +457,7 @@
 		padding:3px 10px !important;		
 	}
 
-	.nome-ingrediente-a {
+	.nome-ingrediente-a,  .nome-ricetta-a{
 		width: 100%;
 		display: block;
 		color:white;
@@ -436,14 +493,14 @@
 	}
 
 	@media (max-width:1199px) {
-		.categoria {
+		.categoria, .panel-group > .panel-ricetta {
 			width: 48%;
 			margin: 9px;
 		}
 	}
 
 	@media (max-width: 991px) {
-		.categoria {
+		.categoria, .panel-group > .panel-ricetta {
 			width: 99%;
 			margin: 5px;
 		}

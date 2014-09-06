@@ -29,7 +29,7 @@
 		};
 
 		$(document).ready(main);
-		$("body").on("mousedown", function() { controllo_modifiche_ricetta(); });
+		$("body").on("mousedown", function() { controllo_modifiche_ricetta(); check_body_height();});
 
 		$(window).unload(controllo_fine);
 
@@ -40,11 +40,15 @@
 		var mancano = 0.0;
 		var quantita_totale;
 
-		function controllo_modifiche_ricetta() {
-			$("#ricetta li, #ricetta a").mousedown(function() {console.log("click");$("#output").fadeOut(); $("body").focus(); });
-			$(".controller button").mousedown(function() {$("#output").fadeOut("slow");});
+
+		function check_body_height() {
 			$("body").css("height", "auto");
 			$("body").css("height", "100%");
+		}
+
+		function controllo_modifiche_ricetta() {
+			$("#ricetta li, #ricetta a").mousedown(function() {$("#output").fadeOut(); $("body").focus(); });
+			$(".controller button").mousedown(function() {$("#output").fadeOut("slow");});
 		}
 
 		function controllo_inizio() {
@@ -88,6 +92,13 @@
 					
 				}
 
+				if (localStorage.getItem("osservazioni").length != 0) {
+					if (!$("#panel-osservazioni").hasClass("in"))
+						$("#panel-osservazioni").collapse('show');
+				}
+
+				$("#osservazioni").val(localStorage.getItem("osservazioni"));
+
 				
 			
 		}
@@ -126,6 +137,7 @@
 
 			localStorage.setItem("backup", funzioni);
 			localStorage.setItem("spuntati", JSON.stringify(spuntati));
+			localStorage.setItem("osservazioni", $("#osservazioni").val());
 		}
 
 		function main() {
@@ -163,7 +175,7 @@
 			$("#container1").hide();
 			$("#container2").hide();
 
-			$("#container0").removeClass("col-md-4").addClass("col-md-12");
+			//$("#container0").removeClass("col-md-4").addClass("col-md-12");
 
 			$("#output").hide();
 			$("#canvas").hide();
@@ -196,6 +208,21 @@
 			
 		}
 
+		function scrivi_osservazioni(stringa) {
+			if(stringa.length!=0) {
+				stringa = stringa.replace(/<br>/g, "\n");
+				$("#osservazioni").val(stringa);
+				$("#panel-osservazioni").collapse('show');
+			} else {
+				$("#osservazioni").val("");
+				localStorage.setItem("osservazioni", "");
+				if ($("#panel-osservazioni").hasClass("in"))
+					$("#panel-osservazioni").collapse('hide');
+			}
+			
+		}
+
+
 		function add_fase(par_nome) {
 			if(typeof arguments[0] != "string" || par_nome == null)
 				var nome = prompt("Nome della fase? (es. A1 - B - ...)");
@@ -207,6 +234,7 @@
 				check();
 				return;
 			}else if (nome != "" && nome != null) {
+				nome = nome.replace(/\\/g, "/");
 				$("#ricetta").fadeIn("slow");
 				$("#ricetta").append("<li class='fase'><div class='contenuto_testo'>Fase " + nome.toUpperCase() + "</div><a href='' style='float:right; color:#d9534f' onClick='$(this).parent().remove(); check(); return false'><span class='glyphicon glyphicon-remove'></span></a></li>");
 				check();
@@ -227,10 +255,11 @@
 			if(nome=="")
 				return;
 
-			if(nome.indexOf("\\") != -1) {
-				alert("Per favore, non usare il carattere '\\'. Al suo posto usa '/' ");
-				return;
-			}
+			
+
+			nome = nome.replace(/\\/g, "/");
+			nome = nome.replaceAll("'", "`");
+			nome = nome.replaceAll("\"", "`");
 
 			var quantita = $("#quantita_ingrediente").val();
 			quantita = parseFloat(quantita.replace(',', '.'));
@@ -243,7 +272,7 @@
 			if(!isNaN(parseFloat(quantita))) {
 				$("#ricetta").fadeIn("slow");
 
-				var testo = "<li class='ingrediente'><div class='nome'>"+nome + "</div> <span class='quantita_singola'>" + parseFloat(quantita).toFixed(2) + "</span><div class='controller_elemento'><a href='' style='color:#d9534f' onClick='$(this).parent().parent().remove(); cancella_ingrediente("+quantita+"); return false'><span class='glyphicon glyphicon-remove'></span></a><a href='' style='color:#2887FF;' class='modifica'><span class='glyphicon glyphicon-pencil'></span></a><label class='lipide_caption'>Lipide? <input type='checkbox' name='lipide' class='lipide' style=''/></caption></div></li>";
+				var testo = "<li class='ingrediente'><div class='nome'>"+nome + "</div> <span class='quantita_singola'>" + parseFloat(quantita).toFixed(2) + "</span><div class='controller_elemento'><a href='' style='color:#d9534f' onClick='cancella_ingrediente(this); return false'><span class='glyphicon glyphicon-remove'></span></a><a href='' style='color:#2887FF;' class='modifica'><span class='glyphicon glyphicon-pencil'></span></a><label class='lipide_caption'>Lipide? <input type='checkbox' name='lipide' class='lipide' style=''/></caption></div></li>";
 
 				if(part_posizione != null && part_posizione != 0) {
 					$("#ricetta li:eq("+parseInt(part_posizione-1)+")").after(testo);
@@ -265,7 +294,9 @@
 
 		function aggiungi_da_inventario() {
 			var nome = $(this).attr("nome");
-			console.log(nome);
+			nome = nome.replace(/\\/g, "/");
+			nome = nome.replaceAll("'", "`");
+			nome = nome.replaceAll("\"", "`");
 			var quantita = parseFloat(prompt("Quantità per l'ingrediente " + nome + "?")).toFixed(2);
 
 			if(!isNaN(parseFloat(quantita))) {
@@ -273,6 +304,7 @@
 			}
 
 			$(this).parent().parent().parent().children(".nome-ingrediente-panel").children(".nome-ingrediente-a").click();
+			check_body_height();
 
 
 		}
@@ -303,8 +335,12 @@
 			}
 		}
 
-		function cancella_ingrediente(q) {
-
+		function cancella_ingrediente(e) {
+			var nome = $(e).parent().parent().find(".nome").text();
+			if(confirm("Cancellare " + nome + " dalla ricetta?"))
+				$(e).parent().parent().remove();
+			else
+				return false;
 
 			check();
 		}
@@ -343,7 +379,7 @@
 			quantita_totale += parseFloat(nuova_quantita);*/
 			$(this).parent().parent().remove();
 
-			cancella_ingrediente(vecchia_quantita);
+			//cancella_ingrediente(vecchia_quantita);
 			add_ingrediente(nuovo_nome, String(nuova_quantita), posizione);
 			check();
 
@@ -372,6 +408,7 @@
 				testo = prompt("Digita il testo da inserire nella riga (es. OE Limone 6gtt)");
 
 			if (testo != "" && testo != null) {
+				testo = testo.replace(/\\/g, "/");
 				li.html("<div class='contenuto_testo'>" +testo +"</div>" + "<a href='' style='color:#d9534f; margin-right: 19px' onClick='$(this).parent().remove();check(); return false'><span class='glyphicon glyphicon-remove'></span></a><a href='' style='color:#2887FF;' class='modifica_testo' ><span class='glyphicon glyphicon-pencil'></span></a>");
 				$("#ricetta").append(li);
 				$(".modifica_testo").click(modifica_testo);
@@ -408,15 +445,16 @@
 			if($("#ricetta").find("li").length > 0) {
 				$("#reset").show();
 				$("#totale").fadeIn("slow");
-				$("#container0").removeClass("col-md-12").addClass("col-md-4");
+				//$("#container0").removeClass("col-md-12").addClass("col-md-4");
+				$("#container1-info").hide();
 				$("#container1").fadeIn("slow");
 				$("#container2").fadeIn("slow");
 			} else {
 				$("#reset").hide();
 				$("#totale").fadeOut("slow");
-				$("#container1").fadeOut("slow");
+				$("#container1").fadeOut("slow", function() { $("#container1-info").show();});
 				$("#container2").fadeOut("slow");
-				$("#container0").removeClass("col-md-4").addClass("col-md-12");
+				//$("#container0").removeClass("col-md-4").addClass("col-md-12");
 			}
 
 
@@ -457,10 +495,18 @@
 			var ok = confirm("Sei sicuro di voler eliminare la ricetta a schermo?");
 
 			if (ok) {
-				$("#reset").fadeOut(300);
+				$("#panel-osservazioni").collapse('hide');				
 				$("#totale").fadeOut(300);
 				$("#output").fadeOut(300);
-				$("#ricetta").fadeOut(300, function() { $(this).empty(); $("#totale").empty(); $("#output kbd").empty(); check();});
+				$("#ricetta").fadeOut(300, function() { 
+														$(this).empty(); $("#totale").empty(); 
+														$("#output kbd").empty();
+														$("#reset").fadeOut(300);
+														check();														
+														$("#osservazioni").val("");
+														$("#osservazioni").text("");
+
+													});
 
 				quantita_totale = 0;
 
@@ -468,6 +514,8 @@
 				window.scrollTo(0,0);
 				$("body").css("height", "auto");
 				$("body").css("height", "100%");
+
+				
 			}
 
 
@@ -499,7 +547,7 @@
     		$('html, body').animate({
         		scrollTop: $("#stampa_semplice").offset().top-80
     		}, 1000);
-
+    		check_body_height();
 		}
 
 		function converti() {
@@ -537,9 +585,12 @@
 				elementi.push($(this).text());
 			})
 
-			elementi.push($("#totale_kbd").text());
-			var elementi2 = elementi.join("@@@@");
 			
+			elementi.push($("#totale_kbd").text());
+			elementi.push($("#osservazioni").val().replace(/\r\n|\r|\n/g,"<br />"));
+
+			var elementi2 = elementi.join("@@@@");
+
 
 			var form = document.createElement('form');
 			form.style.display = "none";
@@ -587,7 +638,7 @@
 					$("#aggiorna_ricetta").append('<span id="aggiornatore_ricette"><div class="col-md-9"><select id="ricette_aggiorna" class="form-control">'+data+'</select></span></div><div class="col-md-3"><button class="btn btn-block btn-info" id="aggiorna_ricetta_btn" onclick="aggiorna_ricetta()">Aggiorna</button></div></span>');
 				} else {
 					$("#aggiorna").hide();
-					$("#avanzate").append("<div class='separatore'></div><p>Gli utenti registrati possono caricare da qui le loro ricette salvete.<br><a href='register.php'>Registrati</a> anche tu :-)</p>")
+					$("#avanzate").append("<div class='separatore'></div><p>Se sei un utente registrato, puoi caricare da qui le tue ricetta salvate.<br>Salva la tua prima ricetta :-)</p>")
 				}
 				
 			});
@@ -598,7 +649,14 @@
 			$.get( "core/functions/ricette_functions.php", { carica_ricetta: id } )
 			.done(function(data) {
 				$("#ricetta").empty();
-				eval(data);
+
+				data = JSON.parse(data);
+
+				eval(data[0]);
+
+				scrivi_osservazioni(data[1]);
+				
+				
 			});
 		}
 
@@ -638,7 +696,13 @@
 					elenco_funzioni += "crea_lipide('"+nome+"');\n";
 				}
 			});
-			$.get( "core/functions/ricette_functions.php", { aggiorna_ricetta: id, code_ricetta: elenco_funzioni } )
+
+			var osservazioni = $("#osservazioni").val().replace(/\\/g, "/");
+			osservazioni = osservazioni.replaceAll("'", "`");
+			osservazioni = osservazioni.replaceAll("\"", "`");
+			osservazioni = osservazioni.replace(/\n/g, "<br>");
+
+			$.get( "core/functions/ricette_functions.php", { aggiorna_ricetta: id, code_ricetta: elenco_funzioni, osservazioni: osservazioni } )
 			.done(function(data) {
 				alert("Ricetta aggiornata!");
 				$("#aggiorna").click();
@@ -690,8 +754,12 @@
 				}
 			});
 
+			var osservazioni = $("#osservazioni").val().replace(/\\/g, "/");
+			osservazioni = osservazioni.replaceAll("'", "`");
+			osservazioni = osservazioni.replaceAll("\"", "`");
+			osservazioni = osservazioni.replace(/\n/g, "<br>");
 
-			$.post( "core/functions/ricette_functions.php", { salva_ricetta: elenco_funzioni, titolo_ricetta: nome } )
+			$.post( "core/functions/ricette_functions.php", { salva_ricetta: elenco_funzioni, titolo_ricetta: nome, osservazioni: osservazioni } )
 			.done(function(data) {
 				alert(data);
 				carica_ricette();			

@@ -35,6 +35,7 @@ function ricette_lola(ricetta) {
 			add_fase("Fase C");
 			add_ingrediente("AquaShuttle", "2");
 			add_ingrediente("Astraforce", "1");
+			scrivi_osservazioni("La seguente ricetta è ad opera di Lola. Se la usi, ringrazia l'autrice");
 		}
 
 		if (ricetta == "ricetta_siero") {
@@ -65,6 +66,7 @@ function ricette_lola(ricetta) {
 			add_fase('Fase C');
 			add_ingrediente('Liposomi acido jaluronico', '5.00');
 			add_ingrediente('Polarsome 3D Hydra', '3.00');
+			scrivi_osservazioni("La seguente ricetta è ad opera di Ludovica66. Se la usi, ringrazia l'autrice");
 
 		}
 
@@ -78,7 +80,8 @@ function ricette_lola(ricetta) {
 			add_ingrediente("Lauryl Glucoside", "2");
 			add_ingrediente("Phenonip", "0.5");
 			add_ingrediente("Polyquaternium-7", "1.5");
+			scrivi_osservazioni("La seguente ricetta è ad opera di Lola. Se la usi, ringrazia l'autrice");
 		}
-
+		
 
 }

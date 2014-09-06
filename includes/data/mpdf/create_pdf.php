@@ -11,14 +11,17 @@ foreach ($html as $key =>$value) {
 		$stringa = $stringa."<h1>".$value."</h1><hr />";
 	} else if ($key != 0 && $key !=(count($html)-1)){
 		$substringa =  substr($value, 0, 4);
+		$substringa2 =  substr($value, 0, 8);
 
 		if ($substringa == "Fase") {
-			$stringa = $stringa."<h2>".$value."</h2><br>";
+			$stringa = $stringa."<h2>".$value."</h2>";
+		} else if ($substringa2 == "Totale: "){
+			$stringa = $stringa."<br><p>".$value."</p><br>";
 		} else {
-			$stringa = $stringa."<p class='elemento'>".$value."</p><br>";
+			$stringa = $stringa."<p class='elemento'>".$value."</p>";
 		}
 	} else {
-		$stringa = $stringa."<h4>".$value." g</h4>";
+		$stringa = $stringa."<h4>".$value."</h4>";
 	}
 }
 

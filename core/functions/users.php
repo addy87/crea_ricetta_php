@@ -92,9 +92,24 @@ function get_ricetta_code($user_id, $ricetta_id) {
 		
 		exit();
 	}
-	
 
 }
+
+function get_ricetta_note($user_id, $ricetta_id) {
+	$ricetta_id = (int)$ricetta_id;
+	$username = username_from_user_id($user_id);
+
+	if(mysql_result(mysql_query("SELECT COUNT('ricetta_id') from ricette WHERE username = '$username' AND ricetta_id = '$ricetta_id'"), 0)!= 0) {
+		$query = mysql_query("SELECT osservazioni FROM ricette WHERE ricetta_id = '$ricetta_id' AND username = '$username'");
+
+		return mysql_result($query, 0);
+	} else {
+		
+		exit();
+	}
+}
+
+
 
 function cancella_ricetta($user_id, $ricetta_id) {
 	$user_id = (int)$user_id;
@@ -104,11 +119,11 @@ function cancella_ricetta($user_id, $ricetta_id) {
 }
 
 
-function aggiorna_ricetta($user_id, $ricetta_id, $code_ricetta) {
+function aggiorna_ricetta($user_id, $ricetta_id, $code_ricetta, $osservazioni) {
 	$user_id = (int)$user_id;
 	$ricetta_id = (int)$ricetta_id;
 	$username = username_from_user_id($user_id);
-	mysql_query("UPDATE ricette SET code_ricetta = '$code_ricetta' WHERE username = '$username' AND ricetta_id = $ricetta_id");
+	mysql_query("UPDATE ricette SET code_ricetta = '$code_ricetta', osservazioni = '$osservazioni' WHERE username = '$username' AND ricetta_id = $ricetta_id");
 }
 
 
@@ -125,17 +140,18 @@ function modifica_ricetta($user_id, $ricetta_id) {
 	}
 }
 
-function salva_ricetta($user_id, $titolo_ricetta, $ricetta_code) {
+function salva_ricetta($user_id, $titolo_ricetta, $ricetta_code, $osservazioni) {
 	$user_id = (int) $user_id;
 	$titolo_ricetta = sanitize($titolo_ricetta);
 	$username = username_from_user_id($user_id);
 	$code_ricetta = $ricetta_code;
+	$osservazioni = $osservazioni;
 	$data = date("d-m-Y H:i:s");
 
 	$controllo_esistenza = mysql_result(mysql_query("SELECT COUNT('titolo_ricetta') from ricette WHERE titolo_ricetta = '$titolo_ricetta' AND username = '$username'"), 0);
 
 	if ($controllo_esistenza == 0) {
-		mysql_query("INSERT INTO ricette (username, titolo_ricetta, code_ricetta, data) VALUES ('$username', '$titolo_ricetta', '$ricetta_code', '$data')") or die(mysql_error());
+		mysql_query("INSERT INTO ricette (username, titolo_ricetta, code_ricetta, osservazioni, data) VALUES ('$username', '$titolo_ricetta', '$ricetta_code', '$osservazioni', '$data')") or die(mysql_error());
 		return true;
 	} else {
 		return false;
@@ -203,7 +219,7 @@ function register_user($register_data) {
 
 	mysql_query("INSERT INTO users ($fields) VALUES ($data)");
 
-	email($register_data["email"], "Attivazione account [CREA RICETTA]", "Ciao ".$register_data["username"].",\n per attivare il tuo account clicca il link seguente: \n http://augusten.altervista.org/crea-ricetta/activate.php?email=".$register_data["email"]."&email_code=".$register_data["email_code"]."\nAugusten");
+	//email($register_data["email"], "Attivazione account [CREA RICETTA]", "Ciao ".$register_data["username"].",\n per attivare il tuo account clicca il link seguente: \n http://augusten.altervista.org/crea-ricetta/activate.php?email=".$register_data["email"]."&email_code=".$register_data["email_code"]."\nAugusten");
 }
 
 function user_count() {

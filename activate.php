@@ -1,6 +1,9 @@
 <?php
 	include "includes/head.php";
 
+	header("Location: login_form.php"); //aggiunto dopo aver eliminato la conferma via mail
+	exit(); //aggiunto dopo aver eliminato la conferma via mail
+
 	if(isset($_GET["success"]) === true && empty($_GET["success"]) === true ) {
 		echo "<div class='alert alert-success' role='alert'>Email confermata! Procedi pure con l'autenticazione usando la pagina di <a href='login_form.php'>Login</a> :-)</div>";
 		include 'includes/footer.php';

@@ -9,13 +9,13 @@
 
 <div class="container">
 	<h3>Registrati</h3>
-	<p><small>Scegli una password di almeno 7 caratteri ed inserisci un indirizzo email valido (<span style="font-weight:600">verrà inviata una mail di attivazione per il tuo account</span>).<br>Tutti i campi sono richiesti.</small></p>
+	<p><small>Scegli una password di almeno 7 caratteri ed inserisci un indirizzo email valido.<br>Tutti i campi sono richiesti.</small></p>
 
 
 <?php
 
 	if (isset($_GET["success"]) && empty($_GET["success"])) {
-		echo "<div class='alert alert-success' role='alert'>Registrazione effettuata! Controlla la tua mail per attivare l'account (se non ricevi la mail, controlla la cartella SPAM/Indesiderata)</div>";
+		echo "<div class='alert alert-success' role='alert'>Registrazione effettuata! Puoi ora procedere con il <span style='font-weight:bold'><a href='login_form.php'>LOGIN</a></span> :-)</div>";
 		include 'includes/footer.php';
 		exit();
 	} else {

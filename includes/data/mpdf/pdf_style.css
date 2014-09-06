@@ -1,19 +1,23 @@
-.elemento, h2, h1, h4 {
+.elemento, h2, h1, h4, p {
 	font-family: "DejaVuSansCondensed";
 }
 
-.elemento {
-	font-size:16px;
+.elemento, p {
+	font-size:14px;
 	text-indent:25px;
-	line-height: 1px;
+	line-height: 20px;
 	margin: 0;
 	padding: 0;
 
 }
 
+p {
+	text-indent: 0;
+}
+
 h2 {
-	font-size:18px;
-	margin-bottom: 0px;
+	font-size:16px;
+	margin-bottom: 5px;
 	line-height: 10px;
 }
 
@@ -25,5 +29,5 @@ h1 {
 h4 {
 	font-weight: normal;
 	font-style: italic;
-	font-size:16px;
+	font-size:14px;
 }

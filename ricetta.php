@@ -140,14 +140,9 @@ if (logged_in() === false) {
 
 					</div>
 				</div>
-				<div class="col-md-8">					
-					
 
-									
-								
-											
 
-							
+				<div class="col-md-8">	
 
 					<div class="container" id="container1">
 						<div class="row">
@@ -162,7 +157,23 @@ if (logged_in() === false) {
 							<div id="totale"></div>
 						</div>
 
-						
+						<div class="panel-group" id="panel-osservazioni-main">
+							<div class="panel panel-default">
+								<a data-toggle="collapse" data-parent="#accordion" id="osservazioni-toggle" href="#panel-osservazioni">
+								<div class="panel-heading panel-heading-osservazioni">
+									
+									<h4 class="panel-title">
+										Note/Osservazioni<b class='caret'></b>
+									</h4>
+								</div>
+								</a>
+								<div id="panel-osservazioni" class="panel-collapse collapse">
+									<div class="panel-body">
+										<textarea id="osservazioni" rows="8" placeholder="Inserisci qui note/osservazioni sulla ricetta" class="form-control login-field"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
 							
 
 								<?php if(logged_in() === true) {?>
@@ -195,7 +206,41 @@ if (logged_in() === false) {
 							
 						
 					</div>
+
+					<div class="container" id="container1-info">
+						<div class="row">
+							<div class="col-md-12" style="text-align:center">
+								<p class="lead">La tua ricetta è ancora vuota</p>
+								<p style="color:#2ecc71">Aggiungi i primi ingredienti dando un nome e una quantità</p>
+								<p style="color:#16A085">Aggiungi "Fasi", "Righe di testo" e "Righe vuote" per rendere più completa la tua ricetta</p>
+								<?php 
+									if(logged_in() === true) {
+										?>
+											<p style="color:#6F6F6F">Oppure carica una tua ricetta salvata, tramite la sezione "Opzioni avanzate"</p>
+											<p style="color:#3498db">Puoi inoltre inserire elementi direttamente dal tuo inventario (lo trovi sotto la barra di navigazione)</p>
+										<?php
+									} else {
+										?>
+											<p>Gli utenti registrati possono inoltre caricare la loro ricette salvate ed inserire ingredienti direttamente a partire dal loro inventario personale</br><p><span style="font-weight: bold"><a href="register.php">Registrati</a></span> anche tu :-)</p>
+										<?php
+									}
+
+								?>
+							</div>
+						</div>
+
+					</div>
+
+
 				</div>
+
+
+
+
+
+
+
+
 			</div>
 
 			<div class="container settore_transp" id="container2">
@@ -273,6 +318,11 @@ if (logged_in() === true) {
 		$string = str_replace("\'", "\\\'", $string);
 		$string = str_replace('"', '\\"', $string);
 		echo "<script>eval_funzioni(\"".$string."\")</script>";
+
+		$osservazioni = get_ricetta_note($user_id, $_GET["modifica_ricetta"]);
+		$osservazioni = str_replace("'", "`", $osservazioni);
+		$osservazioni = str_replace("\"", "`", $osservazioni);
+		echo "<script>setTimeout(function() { scrivi_osservazioni('".$osservazioni."'); }, 500)</script>";
 	}
 }
 ?>
