@@ -132,7 +132,7 @@
 
 		<div class="panel-body">
 			<div class="col-md-12">			
-				<p class="small">Clicca su una ricetta per vederne i dettagli, modificarla o cancellarla.</p>
+				<p class="small">Clicca su una ricetta per vederne i dettagli, modificarla o cancellarla. Puoi anche trascinare le ricette per riordinarle.</p>
 				
 				
 				<?php
@@ -141,8 +141,11 @@
 					if ($ricette == "zero_ricette") {
 						echo "<tr><td colspan='3'>Non hai ancora salvato nessuna ricetta. <a href='ricetta.php' style='font-weight: bold;'>Crea la tua prima ricetta!</a></td></tr>";
 					} else {
+						echo '<ul id="draggablePanelList">';
 						foreach ($ricette as $ricetta) {
 							$code_ricetta = $ricetta["code_ricetta"];
+
+							$code_ricetta = preg_replace('/crea_lipide.*/', '', $code_ricetta);
 
 							$code_ricetta = str_replace("add_fase('", "", $code_ricetta);
 							$code_ricetta = str_replace("');", "<br>", $code_ricetta);
@@ -155,16 +158,20 @@
 
 							//echo "<tr><td>". $ricetta["titolo_ricetta"] ."</td><td>". $ricetta["data"] ."<td><a class='btn btn-danger btn-sm btn_elabora' href='?cancella=". $ricetta["ricetta_id"] ."'><span class='fui-cross'></span> Cancella</a><a class='btn btn-success btn-sm btn_elabora' href='?modifica=". $ricetta["ricetta_id"] ."'><span class='fui-new'></span> Modifica</a></td></tr>";
 							
-							echo '<div class="panel-group" id="ricetta'. $ricetta["ricetta_id"] .'"><div class="panel panel-default panel-ricetta"><div class="panel-heading nome-ricetta-panel"><a data-toggle="collapse" data-parent="#ricetta'. $ricetta["ricetta_id"] .'" href="#ricettacollapse'. $ricetta["ricetta_id"] .'" class="panel-title nome-ricetta-a">'.$ricetta["titolo_ricetta"]."<br><span class='data'>". $ricetta["data"] ."</span></a></div>";
+							echo '<li class="panel panel-default panel-ricetta" id="ricetta'. $ricetta["ricetta_id"] .'"><div class="panel-heading nome-ricetta-panel"><a data-toggle="collapse" data-parent="#ricetta'. $ricetta["ricetta_id"] .'" href="#ricettacollapse'. $ricetta["ricetta_id"] .'" class="panel-title nome-ricetta-a">'.$ricetta["titolo_ricetta"]."<br><span class='data'>". $ricetta["data"] ."</span></a></div>";
 							echo'<div id="ricettacollapse'. $ricetta["ricetta_id"] .'" class="panel-collapse collapse"><div class="panel-body panel-body-ricetta" style="text-align:center">'. $code_ricetta;
 
 							if (strlen($ricetta["osservazioni"]) > 0) {
 								echo "<br>".$ricetta["osservazioni"];
 							}
 							echo "<div class='controller_ricetta'><a class='btn btn-danger btn-sm btn_elabora' href='?cancella=". $ricetta["ricetta_id"] ."'><span class='fui-cross'></span> Cancella</a><a class='btn btn-success btn-sm btn_elabora' href='?modifica=". $ricetta["ricetta_id"] ."'><span class='fui-new'></span> Modifica</a></div>";
-							echo '</div></div>';
-							echo '</div></div>';
+							echo '</div>';
+							echo '</div></li>';
+
+							
 						}
+
+						echo "</ul>";
 					}
 				?>
 				
@@ -267,10 +274,13 @@
 </div>
 
 <?php include 'includes/footer.php' ?>
-<!--<script type="text/javascript" src="includes/data/masonry.pkgd.js"></script>-->
+<script type="text/javascript" src="includes/data/touch.js"></script>
 <script>
 	
-	
+	$('#draggablePanelList').sortable();
+	$('#draggablePanelList').disableSelection();
+
+
 
 
 	$(".btn-danger, .ingrediente_inventario").click(function(evt) {		
@@ -393,10 +403,16 @@
 		margin-bottom: 10px;
 	}
 
+	#draggablePanelList {
+		margin: 0;
+		padding: 0;
+	}
+
 	.nome-ricetta-a, .nome-ricetta-a:hover {
 		color: white;
 		font-weight: 400 !important;
 		text-transform: uppercase;
+		cursor: move;
 	}
 
 	.data {
@@ -405,7 +421,7 @@
 	}
 
 	.panel-heading-ricette {
-		background-color: #AD376B !important;
+		background-color: #339E51 !important;
 	}
 
 	.panel-heading-inventario {
@@ -413,18 +429,19 @@
 	}
 
 	.panel-ricetta > .nome-ricetta-panel {
-		background-color: #D3719C;
-		padding:3px 10px;
+		background-color: #69AD7A;
+		padding:3px 10px;		
 	}
 
 	.controller_ricetta {
 		margin-top: 20px;
 	}
 
-	.categoria, .panel-group > .panel-ricetta {
+	.categoria, .panel-ricetta {
 		float:left;
 		width: 48%;
 		margin: 11px;
+		list-style: none;
 	}
 
 	.panel-heading.heading-categoria  {
@@ -493,14 +510,14 @@
 	}
 
 	@media (max-width:1199px) {
-		.categoria, .panel-group > .panel-ricetta {
+		.categoria, .panel-ricetta {
 			width: 48%;
 			margin: 9px;
 		}
 	}
 
 	@media (max-width: 991px) {
-		.categoria, .panel-group > .panel-ricetta {
+		.categoria, .panel-ricetta {
 			width: 99%;
 			margin: 5px;
 		}

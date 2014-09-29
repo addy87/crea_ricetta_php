@@ -123,7 +123,9 @@ function aggiorna_ricetta($user_id, $ricetta_id, $code_ricetta, $osservazioni) {
 	$user_id = (int)$user_id;
 	$ricetta_id = (int)$ricetta_id;
 	$username = username_from_user_id($user_id);
-	mysql_query("UPDATE ricette SET code_ricetta = '$code_ricetta', osservazioni = '$osservazioni' WHERE username = '$username' AND ricetta_id = $ricetta_id");
+	$data = date("d-m-Y H:i:s");
+
+	mysql_query("UPDATE ricette SET code_ricetta = '$code_ricetta', osservazioni = '$osservazioni', data = '$data' WHERE username = '$username' AND ricetta_id = $ricetta_id");
 }
 
 

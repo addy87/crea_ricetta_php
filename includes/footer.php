@@ -3,7 +3,7 @@
 </body>
 
 <script type="text/javascript" src="includes/data/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="includes/data/jquery-ui-1.10.4.custom.js"></script>
+<script type="text/javascript" src="includes/data/jquery-ui.js"></script>
 <script type="text/javascript" src="includes/data/bootstrap/js/bootstrap.js"></script>
 
 <script type="text/javascript">

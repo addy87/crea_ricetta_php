@@ -10,13 +10,18 @@ try { localStorage.test = 2; localStorage.removeItem('test');} catch (e) {
 ";
 
 if (logged_in() === false) {
-	echo "<script>".'alert("Attenzione! Non sei autenticato. Le funzionalite di salvataggio delle ricette e inventario sono riservate solamente agli utenti autenticati. Registrati anche tu per salvare e modificare le tue ricette!");'."</script>";
+	echo "<script>".'alert("Attenzione! Non sei autenticato. Le funzionalità di salvataggio delle ricette e inventario sono riservate solamente agli utenti autenticati. Registrati anche tu per salvare e modificare le tue ricette!");'."</script>";
 }
 
 
 ?>
 
 <link rel="stylesheet" href="css/crea_ricetta.css"></link>
+			<div class="container" id="reset_world_container">
+				<div class="row">
+					<div id="reset_world" style="width:100%; text-align:center; font-size: 30px"></div>
+				</div>
+			</div>
 			
 			<div class="container settore_transp">
 				<div class="col-md-12" id="">
@@ -146,6 +151,7 @@ if (logged_in() === false) {
 
 					<div class="container" id="container1">
 						<div class="row">
+							<div id="reset_world" style="width:100%; text-align:center; font-size: 30px"></div>
 							<div id="contenuto">
 								<ul id="ricetta" >
 								</ul>

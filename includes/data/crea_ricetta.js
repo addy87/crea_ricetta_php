@@ -82,7 +82,7 @@
 
 						if ($(this).find(".nome").text() == spuntati[j]) {
 
-							$(this).addClass("spuntato");
+							$(this).find(".lipide_caption").addClass("spuntato");
 							$(this).find(".lipide").prop('checked', true);
 						}
 						
@@ -129,7 +129,8 @@
 			});
 
 			$("#ricetta li").each(function(){
-				if($(this).hasClass("spuntato")) {
+				var spuntato = $(this).find(".controller_elemento").find(".lipide_caption").hasClass("spuntato");
+				if(spuntato) {
 					spuntati.push($(this).find(".nome").text());
 					
 				}
@@ -199,7 +200,8 @@
 								evt.preventDefault();
 								converti();
 							});
-
+			localStorage.setItem('antimateria',"0");
+			$("#reset_world_container").hide();
 			
 
 			
@@ -314,9 +316,6 @@
 				$(this).parent().addClass("spuntato");
 			} else
 				$(this).parent().removeClass("spuntato");
-
-			
-
 			
 		}
 
@@ -327,7 +326,7 @@
 
 						if ($(this).find(".nome").text() == nome) {
 
-							$(this).addClass("spuntato");
+							$(this).find(".lipide_caption").addClass("spuntato");
 							$(this).find(".lipide").prop('checked', true);
 						}
 						
@@ -472,9 +471,16 @@
 			else if (mancano.toFixed(2) > 0 && quantita_totale.toFixed(2)>0) {
 				$("#totale").html("<p style='font-weight:bold'>Totale: " + quantita_totale.toFixed(2) + "</p><p>Mancano " + mancano.toFixed(2) + "g per arrivare a 100g. <a onClick='add_ingrediente("+"\"Acqua\",\""+mancano.toFixed(2)+"\"); return false' href=''>Vuoi aggiungerli in acqua? <img src='includes/data/images/water.png' width='24' /></a></p>");
 			} else if (quantita_totale < 0 ) {
-				$("#totale").html("<p class='antimateria animated tada' style='font-weight:bold; color:red; font-size:20px'>Totale: " + quantita_totale.toFixed(2) + "g. MATERIA A MASSA NEGATIVA creata <br> DISTRUZIONE UNIVERSO IN CORSO....</p>");
+				if (localStorage.getItem('antimateria') != "1" || localStorage.getItem('antimateria') == null) {
+					$("#totale").html("<p class='antimateria animated tada' style='font-weight:bold; color:red; font-size:20px'>Totale: " + quantita_totale.toFixed(2) + "g. MATERIA A MASSA NEGATIVA creata <br> DISTRUZIONE UNIVERSO IN CORSO....</p>");
 
-				setTimeout(function() {$(".antimateria").removeClass("tada");$(".antimateria").addClass("hinge");}, 4000);
+					setTimeout(function() {
+						
+							antimateria();
+					}, 4000);
+				} else {
+					$("#totale").html("<p class='antimateria animated tada' style='font-weight:bold; color:red; font-size:20px'>Totale: " + quantita_totale.toFixed(2) + "g. MATERIA A MASSA NEGATIVA creata <br> L'universo e' gia' stato distrutto e ricreato. Che facciamo? Sistemiamo la ricetta? :-)</p>");
+				}
 
 			} else if (mancano.toFixed(2) == 100 && quantita_totale.toFixed(2) == 0) {
 				$("#totale").html("<p style='font-weight:bold'>Totale: " + quantita_totale.toFixed(2) + "g</p>");
@@ -490,6 +496,59 @@
 			return quantita_totale.toFixed(2);
 
 		}
+
+		function antimateria() {
+			setTimeout(function() {
+					$("#ricetta").addClass("animated hinge");
+				}, 500);
+
+			setTimeout(function() {
+					$(".btn").addClass("animated hinge");
+				}, 2000);
+
+			setTimeout(function() {
+					$("#panel-osservazioni-main").addClass("animated hinge");
+					$("#formo").addClass("animated hinge");
+					$("#totale").addClass("animated hinge");
+				}, 3500);
+
+			setTimeout(function() {
+					$(".antimateria").removeClass("tada");
+					$(".antimateria").addClass("hinge");
+				}, 5000);
+
+			setTimeout(function() {					
+					$(".container").addClass("animated hinge");
+				}, 6500);
+			
+			setTimeout(function() {
+					$("#reset_world").html("<p>E adesso?</p><a href='#' onclick='world_reset()'>Cheffacccciamo?<br>Resettiamo l'universo? <img src='includes/data/images/doctorwho.jpg' style='display:block; margin: 30px auto; border: 5px solid #16a085; border-radius:100px'/></a>");
+					$("#reset_world_container").removeClass("animated");
+					$("#reset_world_container").removeClass("hinge");
+					$("#reset_world_container").fadeIn(3000);
+
+				}, 9000);
+			
+			
+			
+			
+		}
+
+		function world_reset() {
+			localStorage.setItem('antimateria',"1");
+			$("#reset_world_container").hide();
+			$("#totale").html("<p class='antimateria' style='font-weight:bold; color:red; font-size:20px'>Totale: " + quantita_totale.toFixed(2) + "g. MATERIA A MASSA NEGATIVA creata <br> L'universo e' gia' stato distrutto e ricreato. Che facciamo? Sistemiamo la ricetta? :-)</p>");
+			$("#ricetta, .btn, #panel-osservazioni-main, #formo, #totale, .antimateria, .container").removeClass("animated");
+			$("#ricetta, .btn, #panel-osservazioni-main, #formo, #totale, .antimateria, .container").removeClass("hinge");
+			$("#ricetta, .btn, #panel-osservazioni-main, #formo, #totale, .antimateria, .container").addClass("animated zoomInDown");
+
+			setTimeout(function() {
+				$("*").removeClass("animated");
+				$("*").removeClass("hinge");
+				$("*").removeClass("tada");
+			}, 1000);
+		}
+
 
 		function reset() {
 			var ok = confirm("Sei sicuro di voler eliminare la ricetta a schermo?");
@@ -691,7 +750,8 @@
 			} );
 
 			$("#ricetta li").each(function() {
-				if($(this).hasClass("spuntato")) {
+				var spuntato = $(this).find(".controller_elemento").find(".lipide_caption").hasClass("spuntato");
+				if(spuntato) {
 					var nome = $(this).find(".nome").text().replaceAll("'", '\\\'');
 					elenco_funzioni += "crea_lipide('"+nome+"');\n";
 				}
@@ -748,7 +808,10 @@
 			} );
 
 			$("#ricetta li").each(function() {
-				if($(this).hasClass("spuntato")) {
+				
+				var spuntato = $(this).find(".controller_elemento").find(".lipide_caption").hasClass("spuntato");
+
+				if(spuntato) {
 					var nome = $(this).find(".nome").text().replaceAll("'", '\\\'');
 					elenco_funzioni += "crea_lipide('"+nome+"');\n";
 				}
