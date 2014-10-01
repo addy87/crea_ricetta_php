@@ -39,8 +39,12 @@
 						<a class="navbar-brand brand_autenticato" href="index.php"><img src="includes/data/images/arc_little.png" /></a>
 						<p class="navbar-text">Ciao 
 						<a href="profile.php" class="navbar-link nome_utente"><?php echo strtoupper($user_data["username"])?></a>
-						<span style="margin-left:10px; margin-right: 10px">|</span> 
-						<a href="ricetta.php" class="navnbar-link ricetta-link">Crea la tua ricetta</a>
+						<span style="margin-left:5px; margin-right: 5px">|</span> 
+						<a href="ricette.php" class="navnbar-link ricette-link">Ricette</a>
+						<span style="margin-left:5px; margin-right: 5px">|</span> 
+						<a href="inventario.php" class="navnbar-link inventario-link">Inventario</a>
+						<span style="margin-left:5px; margin-right: 5px">|</span> 
+						<a href="ricetta.php" class="navnbar-link ricetta-link">Crea ricetta</a>
 						</p>
 
 				<?php
@@ -72,6 +76,8 @@
 						} else if (logged_in() === true) {
 					?>
 						<li><a href="profile.php">Profilo</a></li>
+						<li><a href="profile.php">Ricette</a></li>
+						<li><a href="profile.php">Inventario</a></li>
 					<?php 
 						}
 					?>

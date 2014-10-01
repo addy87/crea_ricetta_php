@@ -16,9 +16,9 @@
 				<img src="includes/data/images/arc2.png" width="30%"/>
 				<h3>Benvenuto</h3>
 
-				<p style="font-weight: 200">Questa applicazione ti permette di elaborare ricette cosmetiche con tanti strumenti di controllo e gestione. <br>Salva la tua ricetta all'interno del tuo account e modificala quando e come vuoi!</p>
+				<p style="font-weight: 200">Questa applicazione ti permette di elaborare ricette cosmetiche con tanti strumenti di controllo e gestione. <br>Salva la tua ricetta all'interno del tuo account e modificala come vuoi!</p>
 
-				<p style="text-decoration:underline">Puoi comunque usare lo strumento anche senza registrarti (cliccando <a href="ricetta.php" style="font-weight:bold">qui</a>), ma non potrai salvare la tua ricetta!</p>
+				<p style="font-weight: 200; margin-top:40px">Puoi comunque usare lo strumento <b>anche senza registrarti (cliccando <a href="ricetta.php" style="font-weight:bold">qui</a>)</b>, <span style="text-decoration:underline">ma non potrai salvare la tua ricetta!</span></p>
 
 
 				<div class="intro">

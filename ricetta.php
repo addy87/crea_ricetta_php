@@ -254,6 +254,7 @@ if (logged_in() === false) {
 					<div class="container">
 						<div class="row" style="text-align: center">
 							<button id="stampa_semplice" type="button" class="btn btn-default"><span class="glyphicon"><img class="icona_bigger" src="includes/data/images/elabora.png"/></span> Elabora ricetta</button>
+							<p class="small" style="text-align:center; margin-bottom:0; margin-top:5px; font-size:12px; line-height:15px; color:#8A8A8A;">Guarda la cascata dei grassi. Converti la tua ricetta. Crea un PDF.</p>
 						</div>
 					</div>
 				</div>

@@ -179,9 +179,6 @@ function assegna(nome) {
 		case "olio di guanabana (graviola)":
 			valore="medio";
 			break;
-		case "olio di hoax nut":
-			valore="medio";
-			break;
 		case "olio di inca inchi":
 			valore="medio";
 			break;

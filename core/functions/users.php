@@ -1,5 +1,91 @@
 <?php
 
+function get_dati_utente($dato, $user_id) {
+	$user_id = (int)$user_id;
+	$username = username_from_user_id($user_id);
+
+	switch ($dato) {
+		case 'ricette':
+			$valore = mysql_result(mysql_query("SELECT COUNT('ricetta_id') from ricette WHERE username = '$username'"), 0);
+			return $valore;
+			break;
+		case 'inventario':
+			$valore = mysql_result(mysql_query("SELECT COUNT('ingrediente_id') from inventario WHERE username = '$username'"), 0);
+			return $valore;
+			break;
+		case 'ricette_totali':
+			$valore = mysql_result(mysql_query("SELECT COUNT('ricetta_id') from ricette"), 0);
+			return $valore;
+			break;
+		case 'ingredienti_totali':
+			$valore = mysql_result(mysql_query("SELECT COUNT('ingrediente_id') from inventario"), 0);
+			return $valore;
+			break;
+		default:
+			break;
+	}
+}
+
+
+function get_ricette_da_cartella($user_id, $cartella, $order = NULL) {	
+	$user_id = (int)$user_id;
+	$username = username_from_user_id($user_id);
+
+
+
+	if( mysql_result(mysql_query("SELECT COUNT('ricetta_id') from ricette WHERE username = '$username'"), 0)!= 0) {
+		if ($order != NULL) {
+			if ($order == "date_asc") {
+				$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella' ORDER BY data ASC");				
+			} else if ($order == "name_asc") {
+				$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella' ORDER BY titolo_ricetta ASC");				
+			} else if ($order == "date_desc") {
+				$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella' ORDER BY data DESC");				
+			} else if ($order == "name_desc") {
+				$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella' ORDER BY titolo_ricetta DESC");				
+			} else {
+				$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella'");
+			}
+		} else {
+			$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' AND cartella = '$cartella'");
+		}
+		$ricette = array();
+		while ($ricetta = mysql_fetch_assoc($query2)) {
+			$ricette[] = $ricetta;
+		}
+		return $ricette;
+	} else {
+		return "zero_ricette";
+	}	
+
+}
+
+function sposta_ricetta($user_id, $ricetta_id, $cartella) {
+	$user_id = (int)$user_id;
+	$username = username_from_user_id($user_id);
+
+	mysql_query("UPDATE ricette SET cartella = '$cartella' WHERE username = '$username' AND ricetta_id = '$ricetta_id'");
+	return true;
+}
+
+function get_cartelle($user_id) {
+	$user_id = (int)$user_id;
+	$ricette = get_ricette($user_id);
+
+	if ($ricette == "zero_ricette")
+		return;
+
+	$cartelle = array();
+
+	foreach($ricette as $ricetta) {
+		$cartelle[] = $ricetta["cartella"]; 
+	}
+
+	$cartelle = array_unique($cartelle);
+	return $cartelle;
+}
+
+
 function aggiorna_ingrediente_inventario($username, $ingrediente_id, $nuovo_nome_ingrediente, $nuova_categoria_ingrediente, $nuova_nota_ingrediente) {
 	$nuova_categoria_ingrediente = strtoupper($nuova_categoria_ingrediente);
 	mysql_query("UPDATE inventario SET nome_ingrediente = '$nuovo_nome_ingrediente', categoria = '$nuova_categoria_ingrediente', inventario_note = '$nuova_nota_ingrediente' WHERE username = '$username' AND ingrediente_id = '$ingrediente_id'");
@@ -54,7 +140,9 @@ function get_ricette($user_id) {
 	$username = username_from_user_id($user_id);
 
 	if( mysql_result(mysql_query("SELECT COUNT('ricetta_id') from ricette WHERE username = '$username'"), 0)!= 0) {
-		$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username'");
+		
+		$query2 = mysql_query("SELECT * FROM ricette WHERE username = '$username' ORDER BY data DESC");
+		
 		$ricette = array();
 		while ($ricetta = mysql_fetch_assoc($query2)) {
 			$ricette[] = $ricetta;

@@ -10,6 +10,8 @@ body {
 	height: 100%;
 	font-weight: 400;
 	padding-top:70px;
+	background-image: url("bg.png");
+
 	
 }
 
@@ -67,17 +69,20 @@ body {
 	font-size: 13px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 	.brand_autenticato {
 		display: none;
 	}
 
 	.navbar-text {
 		float: left !important;
+		width: 60%;
+		padding: 18px 0 !important;
 	}
 
 	.navbar-toggle {
 		float: right !important;
+		vertical-align: middle !important;
 	}
 }
 
@@ -148,10 +153,26 @@ body {
 	}
 
 	.navbar-inverse .navbar-text a.ricetta-link {
-		color: #1abc9c;
+		color: #F57373;
 	}
 
 	.navbar-inverse .navbar-text a.ricetta-link:hover {
+		color: #55D4BB;
+	}
+
+	.navbar-inverse .navbar-text a.ricette-link {
+		color: #6CEC8D;
+	}
+
+	.navbar-inverse .navbar-text a.ricette-link:hover {
+		color: #55D4BB;
+	}
+
+	.navbar-inverse .navbar-text a.inventario-link {
+		color: #48D4F6;
+	}
+
+	.navbar-inverse .navbar-text a.inventario-link:hover {
 		color: #55D4BB;
 	}
 
