@@ -152,6 +152,11 @@ if (logged_in() === false) {
 					<div class="container" id="container1">
 						<div class="row">
 							<div id="reset_world" style="width:100%; text-align:center; font-size: 30px"></div>
+							
+							<div style="text-align:right">							
+								<button id="reset" class="btn btn-danger btn-sm">Pulisci schermata</button>
+							</div>
+										
 							<div id="contenuto">
 								<ul id="ricetta" >
 								</ul>
@@ -184,13 +189,11 @@ if (logged_in() === false) {
 
 								<?php if(logged_in() === true) {?>
 									<div class="row text-center">
-										<div class="col-md-4">								
-											<button id="reset" class="btn btn-danger btn-sm btn-block"><span class='icona_span'><img class="icona" src="includes/data/images/trash.png"/></span>Pulisci schermata</button>
-										</div>
-										<div class="col-md-4">
+										
+										<div class="col-md-6">
 											<button id="aggiorna" class="btn btn-info btn-sm btn-block" data-toggle="collapse" data-target="#aggiorna_ricetta"><span class='icona_span'><img class="icona_big" src="includes/data/images/ricetta.png" /></span>Aggiorna ricetta</button>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-6">
 											<button id="salva_file" type="button" class="btn btn-success btn-sm btn-block" ><span class='icona_span'><img class="icona" src="includes/data/images/save.png"/></span> Salva ricetta</button>
 										</div>
 									</div>
@@ -199,13 +202,8 @@ if (logged_in() === false) {
 										<p>Seleziona la ricetta che vuoi aggiornare e clicca AGGIORNA</p>
 										<p><span style="color: red">Attenzione! Il contenuto della ricetta scelta verrà completamente sostituito dalla ricetta attualmente presente nella schermata</span></p>
 									</div>
-								<?php } else if(logged_in() === false) { ?>
-									<div class="row text-center">
-										<div class="col-md-4">								
-											<button id="reset" class="btn btn-danger btn-sm btn-block"><span class='icona_span'><img class="icona" src="includes/data/images/trash.png"/></span>Pulisci schermata</button>
-										</div>										
-									</div>
-								<?php } ?>
+								<?php }  ?>
+									
 							
 
 							
@@ -332,4 +330,40 @@ if (logged_in() === true) {
 		echo "<script>setTimeout(function() { scrivi_osservazioni('".$osservazioni."'); }, 500)</script>";
 	}
 }
+
+if (isset($_GET["modifica_ricetta_share"]) && !empty($_GET["modifica_ricetta_share"]) && isset($_GET["code"]) && !empty($_GET["code"])) {
+	$ricetta = get_ricetta_share($_GET["modifica_ricetta_share"], $_GET["code"]);
+
+		switch ($ricetta) {
+			case 'codice_non_valido':
+				echo "<script>alert('Errore. Il link utilizzato non è valido.');</script></p>";
+				exit;
+				break;
+			case 'nessuna_ricetta_da_id':
+				echo "<script>alert('Errore. Il link utilizzato non è valido.');</script></p>";
+				exit;
+				break;			
+			default:
+				$string = $ricetta["code_ricetta"];
+
+				$string = str_replace("\n", "", $string);
+				$string = str_replace("\r", "", $string);
+				$string = str_replace("\'", "\\\'", $string);
+				$string = str_replace('"', '\\"', $string);
+				echo "<script>eval_funzioni(\"".$string."\")</script>";
+
+				$osservazioni = $ricetta["osservazioni"];
+				$osservazioni = str_replace("'", "`", $osservazioni);
+				$osservazioni = str_replace("\"", "`", $osservazioni);
+				echo "<script>setTimeout(function() { scrivi_osservazioni('".$osservazioni."'); }, 500)</script>";
+		}
+}
+
+
+
+
+
+
+
+
 ?>

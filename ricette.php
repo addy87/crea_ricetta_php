@@ -164,8 +164,10 @@
 						}
 						
 
-						echo '</div></div>';
-						echo '</div></li>';
+						echo '</div>';
+						echo "<btn class='btn btn-info btn-sm btn-share' ricetta=".$ricetta["ricetta_id"]."'><img src='includes/data/images/share.png' width='18'/></btn>";
+						echo '<input type="text" class="input-share form-control login-field" value="http://augusten.altervista.org/crea-ricetta/share.php?id='.$ricetta["ricetta_id"].'&code='.substr(md5($ricetta["username"].$ricetta["ricetta_id"]), 0, 5).'" readonly style="display:none" />';
+						echo '</div></div></li>';
 														
 
 					
@@ -227,11 +229,40 @@
 
 
 
-	
+	$(".btn-share").click(function() {
+		$(this).parent().find(".share-caption").remove();
+		$(this).parent().find(".input-share").after("<p class='share-caption' style='font-size: 16px'>Copia questo indirizzo e usalo per condividere la ricetta</p>");
+		
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			$(this).parent().find(".input-share").removeAttr("readonly");
+			$(this).parent().find(".input-share").fadeIn().focus(focustext);
+			$(this).parent().find(".input-share").attr("onkeydown", "event.preventDefault();event.stopPropagation();return false;");
+			$(this).parent().find(".input-share").attr("oncut", "event.preventDefault();event.stopPropagation();return false;");
+		} else {
+				$(this).parent().find(".input-share").fadeIn().focus().select();
+		}
+	});
+
+	function focustext() {
+        var input = this;
+        setTimeout(function () {
+            input.selectionStart = 0;
+            input.selectionEnd = 99999;
+        },100);
+    }
 
 </script>
 
 <style>
+	.btn-share {
+		margin: 10px auto 0px auto;
+		background-color: #2CBAF1;
+	}
+
+	.input-share {
+		margin-top: 10px;
+	}
+
 	.order {
 		text-align: center;
 		border: 1px solid #34495e;
@@ -269,7 +300,7 @@
 
 	.panel-body .panel-body{
 		background-color: #e7e7e7;
-		padding: 30px;
+		padding: 10px 30px;
 		border-radius: 5px;
 	}
 
@@ -407,7 +438,9 @@
 		margin-left: 18px;
 	}
 
-
+	.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+		color: #666666;
+	}
 
 	@media (max-width:1199px) {
 		.categoria, .panel-ricetta {
